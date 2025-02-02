@@ -34,10 +34,12 @@ class _HomeState extends State<Myapp>{
   }
 
   _removeitem(int index){
-    setState(() {
-      nameList.removeAt(index);
-      numberList.removeAt(index);
-    });
+    if(nameList.length > 0 && numberList.length>0){
+      setState(() {
+        nameList.removeAt(index);
+        numberList.removeAt(index);
+      });
+    }
   }
 
   @override
@@ -58,7 +60,6 @@ class _HomeState extends State<Myapp>{
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Name",
-                    label: Text("Name")
                   ),
                 ),
                 SizedBox(height: 10,),
@@ -86,16 +87,23 @@ class _HomeState extends State<Myapp>{
     )
                     )
                 ),
-                SizedBox(height: 10,),
+                SizedBox(height: 50,),
                 Expanded(
                   child: ListView.builder(
                       itemCount: nameList.length,
                       itemBuilder: (context, index){
-                        return ListTile(
-                          title: Text(nameList[index]),
-                          subtitle: Text(numberList[index]),
-                          leading: Icon(Icons.person, color: Colors.brown,),
-                          trailing: Icon(Icons.phone),
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 5),
+                          child: ListTile(
+                            title: Text(nameList[index],style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 17),),
+                            subtitle: Text(numberList[index], style: TextStyle(color: Colors.grey.shade800),),
+                            leading: Icon(Icons.person, color: Colors.brown, size: 40,),
+                            trailing: Icon(Icons.phone, color: Colors.blue,size: 27,),
+                            tileColor: Colors.grey.shade300,
+                            onLongPress: (){
+                              _removeitem(index);
+                            },
+                          ),
                         );
                       }),
                 )
