@@ -34,13 +34,12 @@ class _HomeState extends State<Myapp>{
   }
 
   _removeitem(int index){
-    if(nameList.length > 0 && numberList.length>0){
-      setState(() {
-        nameList.removeAt(index);
-        numberList.removeAt(index);
-      });
-    }
+    setState(() {
+      nameList.removeAt(index);
+      numberList.removeAt(index);
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,18 +72,18 @@ class _HomeState extends State<Myapp>{
                 ),
                 SizedBox(height: 10,),
                 SizedBox(
-                  width: double.infinity,
+                    width: double.infinity,
                     child: ElevatedButton(onPressed: (){
-                        _addName(nameController.text);
-                        _addNumber(numberController.text);
+                      _addName(nameController.text);
+                      _addNumber(numberController.text);
                     }, child: Text("Add"),
-                      style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueGrey,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5)
-    ),
-    )
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueGrey,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                        )
                     )
                 ),
                 SizedBox(height: 50,),
@@ -101,7 +100,27 @@ class _HomeState extends State<Myapp>{
                             trailing: Icon(Icons.phone, color: Colors.blue,size: 27,),
                             tileColor: Colors.grey.shade300,
                             onLongPress: (){
-                              _removeitem(index);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context){
+                                  return AlertDialog(
+                                    title: Text("Confirmation"),
+                                    content: Text("Are you sure for Delete?"),
+                                    actions: [
+                                      IconButton(onPressed: (){
+                                        Navigator.pop(context);
+                                      }, icon: Icon(Icons.signal_cellular_no_sim_outlined),
+                                      ),
+
+                                      IconButton(onPressed: (){
+                                        _removeitem(index);
+                                        Navigator.pop(context);
+                                      }, icon: Icon(Icons.delete_outline),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             },
                           ),
                         );
